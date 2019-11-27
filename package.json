@@ -1,0 +1,10 @@
+{
+  "name": "hackernews-graphql",
+  "version": "1.0.0",
+  "description": "hackernews clone",
+  "main": "src/index.js",
+  "repository": "https://github.com/Kasulejoseph/hackernews-graphql.git",
+  "author": "kasule joseph <kasule06joseph@gmail.com.com>",
+  "license": "MIT",
+  "private": false
+}
