@@ -1,24 +1,13 @@
 import { GraphQLServer } from 'graphql-yoga'
-
+import { typeDefs } from './schema.qraphql'
 
 let link = [{
     id: 'link-0',
     description: 'Fullstack tutorial for GraphQL ',
     url: 'www.howtographql.com'
 }]
-// defines graphQL schema
-const typeDefs = `
-type Query {
-    info: String!
-    feeds: [Link!]!
-}
 
-type Link {
-    id: ID!
-    description: String!
-    url: String!
-}
-`
+// defines graphQL schema
 const resolvers = {
     Query: {
         info: () => 'Thats true',
@@ -33,7 +22,7 @@ const resolvers = {
 }
 
 const server = new GraphQLServer({
-    typeDefs,
+    typeDefs: typeDefs(),
     resolvers
 })
 
