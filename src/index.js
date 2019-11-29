@@ -12,6 +12,7 @@ let links = [{
 }]
 
 let feedCount = links.length
+
 // defines graphQL schema
 const resolvers = {
     Query: {
@@ -48,11 +49,18 @@ const resolvers = {
                 ...newLink
             }
             return links[index]
-
+        },
+        deleteLink: (parent, args) => {
+            const index = links.findIndex(({
+                id
+            }) => id === args.id)
+            return links.splice(index, 1)[0]
         }
 
     }
 }
+
+
 
 const server = new GraphQLServer({
     typeDefs: typeDefs(),

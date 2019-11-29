@@ -9,6 +9,7 @@ export const typeDefs = () => `
     type Mutation {
         post(url: String!, description: String!): Link!
         updateLink(id: ID!, url: String, description: String): Link
+        deleteLink(id: ID!): Link
     }
     type Link {
         id: ID!
