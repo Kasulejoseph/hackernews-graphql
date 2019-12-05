@@ -1,6 +1,8 @@
+
 import {
     GraphQLServer
 } from 'graphql-yoga'
+import { prisma } from './generated/prisma-client'
 import {
     typeDefs
 } from './schema.qraphql'
@@ -17,7 +19,9 @@ let feedCount = links.length
 const resolvers = {
     Query: {
         info: () => 'Thats true',
-        feeds: () => links,
+        feeds: (root, args, context, info) => {
+            return context.prisma.links()
+        },
         link: (parent, args) => {
             const link = links.find(({
                 id
@@ -27,14 +31,11 @@ const resolvers = {
         }
     },
     Mutation: {
-        post: (parent, args) => {
-            const link = {
-                id: `link-${feedCount++}`,
+        post: (parent, args, context) => {
+            return context.prisma.createLink({
                 url: args.url,
                 description: args.description
-            }
-            links.push(link)
-            return link
+            })
         },
         updateLink: (parent, args) => {
             const index = links.findIndex(({
@@ -64,7 +65,8 @@ const resolvers = {
 
 const server = new GraphQLServer({
     typeDefs: typeDefs(),
-    resolvers
+    resolvers,
+    context: { prisma }
 })
 
 server.start(() => console.log(`Server Running`))
